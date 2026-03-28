@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>House of Rumega — Membership Application</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #111111;
+      color: #E5E0D8;
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+    }
+
+    /* ── LAYOUT ── */
+    .page {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* ── COVER ── */
+    .cover {
+      background: #1A1A1A;
+      border: 0.5px solid #C9A84C44;
+      border-radius: 16px;
+      padding: 3rem 2rem;
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .cover-brand {
+      font-size: 11px;
+      letter-spacing: 5px;
+      color: #C9A84C;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .cover-rule {
+      width: 48px;
+      height: 1.5px;
+      background: #C9A84C;
+      margin: 14px auto;
+    }
+    .cover-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+    .cover-sub {
+      font-size: 15px;
+      color: #999;
+      font-style: italic;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .cover-badge {
+      display: inline-block;
+      background: #C9A84C;
+      color: #1A1A1A;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      padding: 6px 20px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+
+    /* ── FORM SECTIONS ── */
+    .form-section {
+      margin-bottom: 2.5rem;
+    }
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 4px;
+      font-weight: 700;
+      color: #C9A84C;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #C9A84C33;
+    }
+
+    /* ── FIELDS ── */
+    .field { margin-bottom: 1.25rem; }
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #E5E0D8;
+      margin-bottom: 7px;
+    }
+    .field label .req { color: #C9A84C; margin-left: 2px; }
+    .field .helper {
+      font-size: 12px;
+      color: #777;
+      margin-top: 5px;
+      line-height: 1.5;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 11px 15px;
+      font-size: 14px;
+      font-family: inherit;
+      background: #222222;
+      border: 0.5px solid #444;
+      border-radius: 8px;
+      color: #E5E0D8;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #C9A84C;
+      box-shadow: 0 0 0 3px #C9A84C1A;
+    }
+    input::placeholder,
+    textarea::placeholder { color: #555; }
+    textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9A84C' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 38px;
+      cursor: pointer;
+    }
+    select option { background: #222; color: #E5E0D8; }
+
+    /* ── TWO COLUMN ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 520px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+
+    /* ── CHAR COUNT ── */
+    .char-count {
+      font-size: 11px;
+      color: #555;
+      text-align: right;
+      margin-top: 5px;
+    }
+
+    /* ── CHECKBOX GRID ── */
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    @media (max-width: 480px) {
+      .checkbox-grid { grid-template-columns: 1fr; }
+    }
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: #1E1E1E;
+      border: 0.5px solid #333;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      font-size: 13px;
+      color: #C8C0B0;
+      user-select: none;
+    }
+    .check-item:hover {
+      border-color: #C9A84C88;
+      background: #252218;
+    }
+    .check-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #C9A84C;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .check-item.selected {
+      border-color: #C9A84C;
+      background: #201D10;
+      color: #E5DFC8;
+    }
+
+    /* ── RADIO GRID ── */
+    .radio-grid { display: flex; flex-direction: column; gap: 10px; }
+    .radio-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 16px;
+      background: #1E1E1E;
+      border: 0.5px solid #333;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      user-select: none;
+    }
+    .radio-item:hover {
+      border-color: #C9A84C88;
+      background: #252218;
+    }
+    .radio-item input[type="radio"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #C9A84C;
+      cursor: pointer;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+    .radio-item.selected {
+      border-color: #C9A84C;
+      background: #201D10;
+    }
+    .radio-item-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #E5E0D8;
+      margin-bottom: 3px;
+    }
+    .radio-item-sub {
+      font-size: 12px;
+      color: #777;
+      line-height: 1.5;
+    }
+
+    /* ── AGREEMENT ── */
+    .agreement-box {
+      background: #1A1A1A;
+      border: 1px solid #C9A84C44;
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 1.75rem;
+    }
+    .agreement-box input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: #C9A84C;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .agreement-text {
+      font-size: 13px;
+      color: #B0A898;
+      line-height: 1.7;
+    }
+    .agreement-text strong { color: #C9A84C; font-weight: 600; }
+
+    /* ── SUBMIT BUTTON ── */
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      background: #C9A84C;
+      color: #1A1A1A;
+      border: none;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+      font-family: inherit;
+    }
+    .submit-btn:hover { opacity: 0.88; }
+    .submit-btn:active { transform: scale(0.99); }
+    .submit-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ── ERROR MESSAGE ── */
+    .error-msg {
+      display: none;
+      background: #2A1515;
+      border: 0.5px solid #C0392B55;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #E07070;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    /* ── SUCCESS SCREEN ── */
+    .success-box {
+      display: none;
+      background: #1A1A1A;
+      border: 0.5px solid #C9A84C44;
+      border-radius: 16px;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2px solid #C9A84C;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 26px;
+      color: #C9A84C;
+    }
+    .success-title {
+      font-size: 26px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .success-sub {
+      font-size: 15px;
+      color: #999;
+      line-height: 1.75;
+      max-width: 400px;
+      margin: 0 auto 2rem;
+    }
+    .success-rule {
+      width: 48px;
+      height: 1.5px;
+      background: #C9A84C;
+      margin: 0 auto 1.25rem;
+    }
+    .success-motto {
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: #C9A84C;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      text-align: center;
+      margin-top: 2.5rem;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: #444;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+
+    <!-- COVER -->
+    <div class="cover">
+      <div class="cover-brand">House of Rumega</div>
+      <div class="cover-rule"></div>
+      <div class="cover-title">Membership Application</div>
+      <div class="cover-sub">
+        The House is free to join.<br>The value inside it is not.
+      </div>
+      <div class="cover-badge">Free for Life</div>
+    </div>
+
+    <!-- FORM -->
+    <form id="memberForm" novalidate>
+
+      <!-- SECTION 1 -->
+      <div class="form-section">
+        <div class="section-label">01 · Identity &amp; Presence</div>
+
+        <div class="two-col">
+          <div class="field">
+            <label>Full name <span class="req">*</span></label>
+            <input type="text" name="fullname" placeholder="Your full name" required />
+          </div>
+          <div class="field">
+            <label>Occupation / Industry <span class="req">*</span></label>
+            <input type="text" name="occupation" placeholder="e.g. Lawyer, Engineer, CEO" required />
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="field">
+            <label>Email address <span class="req">*</span></label>
+            <input type="email" name="email" placeholder="you@example.com" required />
+          </div>
+          <div class="field">
+            <label>Phone number <span class="req">*</span></label>
+            <input type="tel" name="phone" placeholder="+234 or +44..." required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>City &amp; Country <span class="req">*</span></label>
+          <input type="text" name="location" placeholder="e.g. Lagos, Nigeria" required />
+        </div>
+      </div>
+
+      <!-- SECTION 2 -->
+      <div class="form-section">
+        <div class="section-label">02 · Style &amp; Wardrobe Reality</div>
+
+        <div class="field">
+          <label>How would you describe your current style? <span class="req">*</span></label>
+          <div class="checkbox-grid" id="styleGrid">
+            <label class="check-item"><input type="checkbox" name="style" value="Basic / no system yet"> Basic / no system yet</label>
+            <label class="check-item"><input type="checkbox" name="style" value="Smart casual"> Smart casual</label>
+            <label class="check-item"><input type="checkbox" name="style" value="Cultural / native wear"> Cultural / native wear</label>
+            <label class="check-item"><input type="checkbox" name="style" value="Suits and formal"> Suits &amp; formal</label>
+            <label class="check-item"><input type="checkbox" name="style" value="Mixed — depends on the day"> Mixed — depends on the day</label>
+            <label class="check-item"><input type="checkbox" name="style" value="Honestly no idea yet"> Honestly, no idea yet</label>
+          </div>
+        </div>
+
+        <div class="field" style="margin-top: 1.25rem;">
+          <label>What occasions do you dress for most? <span class="req">*</span></label>
+          <div class="checkbox-grid" id="occasionGrid">
+            <label class="check-item"><input type="checkbox" name="occasion" value="Office / work"> Office / work</label>
+            <label class="check-item"><input type="checkbox" name="occasion" value="Weddings and events"> Weddings &amp; events</label>
+            <label class="check-item"><input type="checkbox" name="occasion" value="Church / religious"> Church / religious</label>
+            <label class="check-item"><input type="checkbox" name="occasion" value="Business meetings"> Business meetings</label>
+            <label class="check-item"><input type="checkbox" name="occasion" value="Cultural / Owanbe"> Cultural / Owanbe</label>
+            <label class="check-item"><input type="checkbox" name="occasion" value="Everyday / daily life"> Everyday / daily life</label>
+          </div>
+        </div>
+
+        <div class="field" style="margin-top: 1.25rem;">
+          <label>What is your biggest style challenge right now?</label>
+          <textarea name="challenge" id="challengeText" maxlength="300"
+            placeholder="Be honest — this helps us serve you better. e.g. I never know what to wear to look sharp without overdressing..."></textarea>
+          <div class="char-count"><span id="challengeCount">0</span> / 300</div>
+        </div>
+      </div>
+
+      <!-- SECTION 3 -->
+      <div class="form-section">
+        <div class="section-label">03 · Ambition &amp; Intent</div>
+
+        <div class="field">
+          <label>Why do you want to join House of Rumega? <span class="req">*</span></label>
+          <textarea name="whyjoin" id="whyText" maxlength="400" required
+            placeholder="In your own words — what brought you here and what do you want from the House?"></textarea>
+          <div class="char-count"><span id="whyCount">0</span> / 400</div>
+        </div>
+
+        <div class="field">
+          <label>What does dressing well mean to you personally?</label>
+          <textarea name="meaning" id="meaningText" maxlength="300"
+            placeholder="Optional but powerful — we read every answer."></textarea>
+          <div class="char-count"><span id="meaningCount">0</span> / 300</div>
+        </div>
+      </div>
+
+      <!-- SECTION 4 -->
+      <div class="form-section">
+        <div class="section-label">04 · Community Fit</div>
+
+        <div class="field">
+          <label>Are you interested in the business &amp; fashion education side? <span class="req">*</span></label>
+          <div class="radio-grid" id="bizGrid">
+            <label class="radio-item">
+              <input type="radio" name="bizinterest" value="Yes — this is exactly what I am looking for" required>
+              <div>
+                <div class="radio-item-title">Yes — this is exactly what I am looking for</div>
+                <div class="radio-item-sub">The skill, the business, the marketing, the money-sense</div>
+              </div>
+            </label>
+            <label class="radio-item">
+              <input type="radio" name="bizinterest" value="Mostly the style side for now">
+              <div>
+                <div class="radio-item-title">Mostly the style side for now</div>
+                <div class="radio-item-sub">I will explore the rest once I am in</div>
+              </div>
+            </label>
+            <label class="radio-item">
+              <input type="radio" name="bizinterest" value="Tell me more first">
+              <div>
+                <div class="radio-item-title">Tell me more first</div>
+                <div class="radio-item-sub">I am curious but want to understand it better</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="field" style="margin-top: 1.25rem;">
+          <label>How did you hear about House of Rumega? <span class="req">*</span></label>
+          <select name="referral" required>
+            <option value="" disabled selected>Select one</option>
+            <option>Instagram / social media</option>
+            <option>A friend or colleague</option>
+            <option>This style guide</option>
+            <option>WhatsApp / community group</option>
+            <option>Google / online search</option>
+            <option>An event or gathering</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- AGREEMENT -->
+      <div class="agreement-box">
+        <input type="checkbox" id="agreement" name="agreement" required>
+        <div class="agreement-text">
+          I understand that membership is <strong>free</strong>, and I commit to being an
+          <strong>active, respectful member</strong> of the House of Rumega community.
+          I am here with intention — to grow, to learn, and to carry myself with the
+          standard this House represents.
+        </div>
+      </div>
+
+      <!-- ERROR -->
+      <div class="error-msg" id="errorMsg">
+        Something went wrong submitting your application. Please check your connection and try again.
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">Join the House</button>
+
+    </form>
+
+    <!-- SUCCESS -->
+    <div class="success-box" id="successBox">
+      <div class="success-icon">✦</div>
+      <div class="success-title">Welcome to the House.</div>
+      <div class="success-sub">
+        Your application has been received. We will be in touch shortly to confirm
+        your membership and bring you into the community.<br><br>
+        The House is ready for you.
+      </div>
+      <div class="success-rule"></div>
+      <div class="success-motto">Power · Presence · Prestige</div>
+    </div>
+
+    <div class="page-footer">© House of Rumega · All rights reserved</div>
+
+  </div><!-- /page -->
+
+  <script>
+    // ── REPLACE THIS WITH YOUR APPS SCRIPT URL AFTER DEPLOYING ──────────────
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwG3frHjMgxq2lqb9rHZVcoDFv1RZ6cg7bxKLo4ECoJyOBn2xbYcdJwQqh_I2TxOdXj/exec";
+    // ─────────────────────────────────────────────────────────────────────────
+
+    // Checkbox visual toggle
+    document.querySelectorAll('.check-item').forEach(item => {
+      item.addEventListener('change', () => {
+        item.classList.toggle('selected', item.querySelector('input').checked);
+      });
+    });
+
+    // Radio visual toggle
+    document.querySelectorAll('.radio-item').forEach(item => {
+      item.addEventListener('change', () => {
+        const name = item.querySelector('input').name;
+        document.querySelectorAll(`.radio-item input[name="${name}"]`).forEach(r => {
+          r.closest('.radio-item').classList.toggle('selected', r.checked);
+        });
+      });
+    });
+
+    // Character counters
+    [
+      ['challengeText', 'challengeCount'],
+      ['whyText',       'whyCount'],
+      ['meaningText',   'meaningCount']
+    ].forEach(([fieldId, countId]) => {
+      const el      = document.getElementById(fieldId);
+      const counter = document.getElementById(countId);
+      if (el && counter) {
+        el.addEventListener('input', () => { counter.textContent = el.value.length; });
+      }
+    });
+
+    // Collect all checked values for a named checkbox group
+    function getChecked(name) {
+      return [...document.querySelectorAll(`input[name="${name}"]:checked`)]
+        .map(el => el.value).join(', ');
+    }
+
+    // Form validation
+    function validate() {
+      const required = [
+        { name: 'fullname',   label: 'Full name' },
+        { name: 'occupation', label: 'Occupation' },
+        { name: 'email',      label: 'Email address' },
+        { name: 'phone',      label: 'Phone number' },
+        { name: 'location',   label: 'City & Country' },
+        { name: 'whyjoin',    label: 'Why you want to join' },
+        { name: 'referral',   label: 'How you heard about us' },
+      ];
+      for (const field of required) {
+        const el = document.querySelector(`[name="${field.name}"]`);
+        if (!el || !el.value.trim()) {
+          return `Please fill in: ${field.label}`;
+        }
+      }
+      if (!getChecked('style')) return 'Please select your current style.';
+      if (!getChecked('occasion')) return 'Please select at least one occasion.';
+      if (!document.querySelector('input[name="bizinterest"]:checked')) return 'Please select your interest in the business & fashion education side.';
+      if (!document.getElementById('agreement').checked) return 'Please read and accept the membership commitment.';
+      return null;
+    }
+
+    // Submit
+    document.getElementById('memberForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const errorMsg = document.getElementById('errorMsg');
+      errorMsg.style.display = 'none';
+
+      const validationError = validate();
+      if (validationError) {
+        errorMsg.textContent = validationError;
+        errorMsg.style.display = 'block';
+        errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      const btn = document.getElementById('submitBtn');
+      btn.textContent = 'Submitting...';
+      btn.disabled = true;
+
+      const formData = {
+        fullname:    document.querySelector('[name="fullname"]').value.trim(),
+        occupation:  document.querySelector('[name="occupation"]').value.trim(),
+        email:       document.querySelector('[name="email"]').value.trim(),
+        phone:       document.querySelector('[name="phone"]').value.trim(),
+        location:    document.querySelector('[name="location"]').value.trim(),
+        style:       getChecked('style'),
+        occasion:    getChecked('occasion'),
+        challenge:   document.querySelector('[name="challenge"]').value.trim(),
+        whyjoin:     document.querySelector('[name="whyjoin"]').value.trim(),
+        meaning:     document.querySelector('[name="meaning"]').value.trim(),
+        bizinterest: document.querySelector('[name="bizinterest"]:checked')?.value || '',
+        referral:    document.querySelector('[name="referral"]').value,
+        agreement:   'Agreed'
+      };
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method:  'POST',
+          mode:    'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify(formData)
+        });
+
+        // Show success screen
+        document.getElementById('memberForm').style.display = 'none';
+        const successBox = document.getElementById('successBox');
+        successBox.style.display = 'block';
+        successBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      } catch (err) {
+        errorMsg.textContent = 'Something went wrong submitting your application. Please check your connection and try again.';
+        errorMsg.style.display = 'block';
+        btn.textContent = 'Join the House';
+        btn.disabled = false;
+      }
+    });
+  </script>
+
+</body>
+</html>
